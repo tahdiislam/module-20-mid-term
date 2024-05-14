@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>
+    This is Home
+</h1>
+<div class="flex flex-wrap gap-4">
+    {% for brand in brands %}
+    <a class="btn btn-primary" href="{% url "filter_home" brand.slug %}">
+        {{brand.name}}
+    </a>
+    {% endfor %}
+    <h2>
+        Number of Cars: {{cars|length}}
+    </h2>
+    <div>
+        {% for car in cars %}
+        <div class="card" style="width: 18rem;">
+            <img src="{{car.image.url}}" class="card-img-top" alt="{{car.title}}">
+            <div class="card-body">
+              <h5 class="card-title">{{car.title}}</h5>
+              <p class="card-text">{{car.description|truncatewords:20}}</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock  %}

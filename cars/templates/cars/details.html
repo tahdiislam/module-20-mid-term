@@ -1,0 +1,60 @@
+<!-- @format -->
+
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
+<section class="p-4">
+    <div class="row w-100">
+        <img class="col-7 h-auto  rounded img-fluid " src="{{car.image.url}}" alt="{{car.title}}" />
+        <p class="col-5 fs-5">
+          {{car.description}}
+        </p>
+      </div>
+      <div class='my-3'>
+          <a class="btn btn-warning my-2" href="{% url "filter_home" car.brand.slug %}">{{car.brand}}</a>
+          <h4 class="card-title my-2">Price: ${{car.price}}</h4>
+          <h4 class="card-title my-2">In Stock: {{car.quantity}}</h4>
+      </div>
+      {% if user.is_authenticated %}
+      <a href="#" class="btn btn-primary">Buy Now</a>
+      {% else %}
+      <a href="{% url "login" %}" class="btn btn-success">Please login to buy the car</a>
+      {% endif %}
+
+      <div>
+        <div class="py-3">
+          <h3>
+            Add a New comment:
+          </h3>
+          <form method='post' novalidate>
+            {% csrf_token %}
+            <!--{{form|crispy}}-->            
+            {% for fm in form %}
+            {{fm.label_tag}}
+            {{fm}}
+            <p class="text-bg-danger ">
+              {{fm.errors|striptags}}
+            </p>
+            {% endfor %}
+            <button type="submit" class="btn btn-warning">Submit</button>
+          </form>
+        </div>
+        <h3>
+          All comments:({{comments|length}})
+        </h3>
+        <div>
+          {% for cmnt in comments %}
+          <div class="card">
+            <div class="card-header">
+              {{cmnt.created_on}}
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p>{{cmnt.body}}</p>
+                <footer class="blockquote-footer"><cite title="Source Title">{{cmnt.name}}</cite></footer>
+              </blockquote>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+</section>
+{% endblock %}

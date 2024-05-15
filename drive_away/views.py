@@ -14,8 +14,6 @@ class HomePage(TemplateView):
         else:
             cars = Car.objects.all()
         brands = Brand.objects.all()
-        print('🤣 all brands', brands)
-        print('😒 all cars', cars)
         context['brands'] = brands
         context['cars'] = cars
         return context

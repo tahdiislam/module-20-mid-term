@@ -1,26 +1,36 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<h1>
-    This is Home
-</h1>
-<div class="flex flex-wrap gap-4">
+<div class='row p-4 w-100 '>
+    <p class="col-6 fs-5">
+        The Tesla Cybertruck, a head-turning electric entrant into the pickup truck market, rolled off the production line in late 2023. This futuristic vehicle has a bold, stainless-steel exterior with sharp angles and a wedge-like shape. Unlike traditional trucks, the Cybertruck boasts a cold-rolled steel exoskeleton that Tesla claims is bulletproof, making it a conversation starter for its durability. But the Cybertruck isn't all show and no go. With three available trims, you can choose the power that best suits your needs. The base Dual Motor all-wheel-drive offers a balance of performance and range. For those seeking ultimate power, the tri-motor "Cyberbeast" boasts a staggering 834 horsepower and rockets from 0-60 mph in a mere 2.6 seconds. Even the single-motor rear-wheel-drive version, slated for release in 2025, promises respectable performance with a more budget-friendly price tag.
+    </p>
+    <img class='col-6 rounded' src="{% static 'Tesla-Cybertruck.webp' %}" alt="">
+</div>
+<div class="w-100 flex justify-content-center btn-group">
+    <a class="btn btn-primary mx-3" href="{% url "home" %}">
+        All Brands
+    </a>
     {% for brand in brands %}
-    <a class="btn btn-primary" href="{% url "filter_home" brand.slug %}">
+    <a class="btn btn-primary mx-3" href="{% url "filter_home" brand.slug %}">
         {{brand.name}}
     </a>
     {% endfor %}
-    <h2>
-        Number of Cars: {{cars|length}}
-    </h2>
-    <div>
+</div>
+<h2 class='p-4'>
+    Number of Cars: {{cars|length}}
+</h2>
+    <div class="w-100 row justify-content-start px-3 pb-3">
         {% for car in cars %}
-        <div class="card" style="width: 18rem;">
+        <div class="card col-3 mx-2">
             <img src="{{car.image.url}}" class="card-img-top" alt="{{car.title}}">
             <div class="card-body">
               <h5 class="card-title">{{car.title}}</h5>
+              <h5 class="card-title">Price: ${{car.price}}</h5>
+              <button class="btn btn-warning btn-sm">{{car.brand}}</button>
               <p class="card-text">{{car.description|truncatewords:20}}</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <a href="{% url "car_details" car.slug %}" class="btn btn-primary">View Details</a>
             </div>
           </div>
         {% endfor %}

@@ -48,3 +48,8 @@ class UserLogoutView(LogoutView):
     
 class UserProfileView(TemplateView):
     template_name = 'users/profile.html'
+
+class UserEditProfileView(UpdateView):
+    model = User
+    template_name = 'form.html'
+    success_url = reverse_lazy('profile')

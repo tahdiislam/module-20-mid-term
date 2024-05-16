@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.views.generic import CreateView, UpdateView, TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from orders.models import Order
 
 class UserCreateView(CreateView):
     model = User
@@ -48,9 +49,16 @@ class UserLoginView(LoginView):
 class UserLogoutView(LogoutView):
     next_page = reverse_lazy('login')
     
+@method_decorator(login_required, name='dispatch')
 class UserProfileView(TemplateView):
     template_name = 'users/profile.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        orders = Order.objects.filter(buyer=self.request.user)
+        context['orders'] = orders
+        return context
 
+@method_decorator(login_required, name='dispatch')
 class UserEditProfileView(UpdateView):
     model = User
     template_name = 'form.html'

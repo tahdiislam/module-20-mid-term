@@ -22,6 +22,6 @@ def buyCar(request, id):
         Order.objects.create(buyer=request.user, car=car)
         Car.objects.filter(pk=id).update(quantity=car.quantity - 1)
         messages.success(request, f"{car.title} buy successfully")
-        return redirect('profile')
+        return redirect('car_details', car.slug)
     else:
         return redirect('home')

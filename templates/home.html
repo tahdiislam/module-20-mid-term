@@ -21,9 +21,11 @@
 <h2 class='p-4'>
     Number of Cars: {{cars|length}}
 </h2>
-    <div class="w-100 row justify-content-start px-3 pb-3">
+    <div class="w-100 row justify-content-center px-3 pb-3 gap-4">
+        <h3>
+        </h3>
         {% for car in cars %}
-        <div class="card col-3 mx-2">
+        <div class="card col-3">
             <img src="{{car.image.url}}" class="card-img-top" alt="{{car.title}}">
             <div class="card-body">
               <h5 class="card-title">{{car.title}}</h5>

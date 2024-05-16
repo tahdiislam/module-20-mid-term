@@ -1,5 +1,10 @@
 <!-- @format -->
 
 {% extends "base.html" %} {% block content %}
-<h1>Welcome {{user}}</h1>
+<section class="p-4">
+    <h1 class='mb-3'>Welcome {{user.first_name}} {{user.last_name}}</h1>
+    <a href="{% url "update_profile" user.id %}" class="btn btn-success">
+        Edit Profile
+    </a>
+</section>
 {% endblock %}

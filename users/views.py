@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
-from .forms import RegisterForm
+from .forms import RegisterForm, UpdateForm
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views.generic import CreateView, UpdateView, TemplateView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 class UserCreateView(CreateView):
     model = User
@@ -53,3 +55,11 @@ class UserEditProfileView(UpdateView):
     model = User
     template_name = 'form.html'
     success_url = reverse_lazy('profile')
+    form_class = UpdateForm
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Profile update successfully')
+        return super().form_valid(form)
+    def form_invalid(self, form):
+        messages.success(self.request, 'Something is wrong, Please try again.')
+        return super().form_invalid(form)

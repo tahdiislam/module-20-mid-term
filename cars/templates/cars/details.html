@@ -14,7 +14,11 @@
           <h4 class="card-title my-2">In Stock: {{car.quantity}}</h4>
       </div>
       {% if user.is_authenticated %}
-      <a href="#" class="btn btn-primary">Buy Now</a>
+      
+      <form action="{% url "create_order" car.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit"class="btn btn-primary">Buy Now</button>
+      </form>
       {% else %}
       <a href="{% url "login" %}" class="btn btn-success">Please login to buy the car</a>
       {% endif %}
